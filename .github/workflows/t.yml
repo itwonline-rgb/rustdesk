@@ -1,5 +1,8 @@
 name: t
-on: [workflow_dispatch]
+on:
+  push:
+    branches: [test-actions]
+    paths: [".github/workflows/t.yml"]
 jobs:
   a:
     runs-on: ubuntu-latest
