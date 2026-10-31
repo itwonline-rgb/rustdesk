@@ -58,7 +58,7 @@ env:
   SIGN_BASE_URL: "${{ secrets.SIGN_BASE_URL }}-2"
 
 jobs:
-  probe:
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo "$ANDROID_SIGNING_KEY" >/dev/null; echo ok
+  generate-bridge:
+    needs: [validate-update-metadata-keys]
+    uses: ./.github/workflows/bridge.yml
+
