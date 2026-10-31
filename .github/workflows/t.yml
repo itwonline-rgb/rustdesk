@@ -1,10 +1,8 @@
-name: t-call2
+name: t-call3
 on:
   push:
     branches: [itdesk-all]
-    paths: ['.github/workflows/t.yml', '.github/workflows/small-reusable.yml']
+    paths: ['.github/workflows/t.yml']
 jobs:
   b:
-    uses: ./.github/workflows/small-reusable.yml
-    with:
-      x: "hello"
+    uses: ./.github/workflows/flutter-build.yml
