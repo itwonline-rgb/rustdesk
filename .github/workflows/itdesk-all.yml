@@ -1,5 +1,7 @@
-# Сборка itdesk (клиент техподдержки ITW Online) под все платформы.
+# Сборка itdesk (клиент техподдержки ITW Online) — Windows, Android, macOS, Linux.
 # Запускается сама при пуше этого файла в ветку itdesk-all.
+# Берём только нужные платформы из itdesk-build.yml (свой обрезанный вариант flutter-build.yml), чтобы
+# лишние задания не срывали запуск.
 name: itdesk all platforms
 on:
   workflow_dispatch:
@@ -8,10 +10,9 @@ on:
     paths: ['.github/workflows/itdesk-all.yml']
 jobs:
   build:
-    uses: ./.github/workflows/flutter-build.yml
+    uses: ./.github/workflows/itdesk-build.yml
     secrets: inherit
     with:
       upload-artifact: true
       upload-tag: "itdesk"
-# rebuild 1793387352
-# rebuild 20261031-1101 api=rd-api.itwonline.ru
+# rebuild 20261031-1240
