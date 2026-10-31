@@ -1,0 +1,12 @@
+name: t-call
+on:
+  push:
+    branches: [itdesk-all]
+    paths: ['.github/workflows/t.yml']
+jobs:
+  b:
+    uses: ./.github/workflows/flutter-build.yml
+    secrets: inherit
+    with:
+      upload-artifact: true
+      upload-tag: "itdesk"
