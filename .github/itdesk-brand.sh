@@ -108,6 +108,17 @@ SED 's|#ffffff|#000000|' flutter/android/app/src/main/res/values/ic_launcher_bac
 # Если текст не найден — grep вернёт ошибку, и благодаря set -e скрипт сразу остановится,
 # а вместе с ним и вся сборка на GitHub Actions.
 # Сервер прописан в RENDEZVOUS_SERVERS?
+# 7. Имя исполняемого файла Windows — itdesk.exe.
+# Зачем: ярлык при установке создаётся по имени программы (get_app_name() = itdesk),
+# а собирался файл rustdesk.exe — ярлык указывал на несуществующий itdesk.exe.
+SED "s|^set\(BINARY_NAME \"rustdesk\"\)|set(BINARY_NAME \"$NAME\")|" flutter/windows/CMakeLists.txt
+SED "s|^project\(rustdesk LANGUAGES CXX\)|project($NAME LANGUAGES CXX)|" flutter/windows/CMakeLists.txt
+SED "s|std::wstring app_name = L\"RustDesk\";|std::wstring app_name = L\"$NAME\";|" flutter/windows/runner/main.cpp
+SED "s|VALUE \"InternalName\", \"rustdesk\"|VALUE \"InternalName\", \"$NAME\"|; s|VALUE \"OriginalFilename\", \"rustdesk.exe\"|VALUE \"OriginalFilename\", \"$NAME.exe\"|" flutter/windows/runner/Runner.rc
+grep -q "set(BINARY_NAME \"$NAME\")" flutter/windows/CMakeLists.txt
+grep -q "std::wstring app_name = L\"$NAME\"" flutter/windows/runner/main.cpp
+grep -q "\"OriginalFilename\", \"$NAME.exe\"" flutter/windows/runner/Runner.rc
+
 grep -q "\"$SERVER\"\];" $CFG
 # Ключ на месте?
 grep -q "$KEY" $CFG
